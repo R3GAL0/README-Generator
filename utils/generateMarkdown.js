@@ -38,9 +38,9 @@ if (license == 2) {
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
-  return `# ${data.title}
-
-`;
+  // insert all the components selected below
+  return `# ${data.title}`;
+  // 
 }
 
 module.exports = generateMarkdown;
