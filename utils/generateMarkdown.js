@@ -45,16 +45,12 @@ function generateMarkdown(data) {
 
 
 ${makeTOC(data.description, data.installation, data.test, data.usage, data.contributing, data.questions)}
-
-
 ${renderData(data.description, 'Description')}
 ${renderData(data.installation, 'Installation')}
 ${renderData(data.test, 'Test')}
 ${renderData(data.usage, 'Usage')}
-  
-
-  
-  `;
+${renderData(data.contributing, 'Contributing')}
+${makeQuestions(data.questions, data.githubUser, data.email)}`;
 
 }
 
@@ -62,12 +58,39 @@ ${renderData(data.usage, 'Usage')}
 function renderData(data, title) {
   if (!data) {
     return '';
-  }
-  return `## ${title}
-
-  ${data}
+  } else if (title == 'Questions') {
+    let array = data.split('~');
+    if (array[0] == '123') {
+      array[0] = '';
+    }
+    // console.log (data);
+    return `
+   
+  ## ${title}
   
-  `;
+  GitHub Username: ${array[1]}
+  GitHub Link:
+  Email: ${array[2]}
+  ${data}`;
+
+  }
+  return `
+ 
+## ${title}
+
+${data}`;
+}
+
+function makeQuestions(data, user, email){
+  return `
+ 
+## Questions
+
+GitHub Username: ${user}
+GitHub Link:
+Email: ${email}
+${data}`;
+
 }
 
 // makes the table of contents
@@ -88,7 +111,8 @@ function makeTOC(description ,installation, test, usage, contributing, questions
   if (contributing){
     toc = toc.concat('- [Contributing](#contributing)\n');
   }
-  if (questions){
+  // will always have this section
+  if (true){
     toc = toc.concat('- [Questions](#questions)\n');
   }
   return toc;

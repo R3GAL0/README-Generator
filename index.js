@@ -73,20 +73,20 @@ async function askQuestions() {
               },
         ])
         .then((data) => {
-
+            // add username and email to readme
+            if (data.questions) {
+              data.questions = '123'
+            }
+            data.questions.concat('~');
+            data.questions.concat(data.githubUser);
+            data.questions.concat('~');
+            data.questions.concat(data.email);
+            console.log(data.questions);
 
             writeToFile('READMEcustom.md', generateMarkdown(data));
         });
 
 }
-
-// ask inital questons
-// ask section text questions
-// format markdown
-// format TOC
-// write to file
-
-
 
 // TODO: Create a function that returns the license section of README
 // need to add badges to the licenses still
@@ -121,9 +121,6 @@ function pickLicense(name) {
     */
 }
 
-
-
-
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
 
@@ -131,65 +128,4 @@ function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, (err) =>
         err ? console.error(err) : console.log('README created!')
     );
-}
-
-// takes in the input makes the text for the markdown file
-function formatData(data) {
-    // data structure
-    //{
-    //   title: 'titel',
-    //   sections: [ 'Description', 'Usage', 'License' ],
-    //   license: 'none',
-    //   githubUser: 'max',
-    //   email: '@roger'
-    // }
-    const { title, sections, license, githubUser, email } = data;
-    /* req variables:
-        descTxt
-        installTxt
-        usageTxt
-        contribTxt
-
-    */
-    let markdownTxt = // need to add links for toc?
-        `# ${title}
-
-## Description
-
-${descTxt}
-
-## Table of Contents (Optional)
-
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Credits](#credits)
-    - [License](#license)
-
-## Installation
-
-${installTxt}
-
-## Usage
-
-${usageTxt}
-
-## Contributing
-
-${contribTxt}
-
-## License
-
-`
-    // add badges to the license
-    markdownTxt.concat(pickLicense(license, githubUser, '2023'));
-
-    `
-## Tests
-
-${testsTxt}
-
-## Questions
-
-${questionsTxt}`
-
 }
