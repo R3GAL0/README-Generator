@@ -73,15 +73,6 @@ async function askQuestions() {
               },
         ])
         .then((data) => {
-            // add username and email to readme
-            if (data.questions) {
-              data.questions = '123'
-            }
-            data.questions.concat('~');
-            data.questions.concat(data.githubUser);
-            data.questions.concat('~');
-            data.questions.concat(data.email);
-            console.log(data.questions);
 
             writeToFile('READMEcustom.md', generateMarkdown(data));
         });
