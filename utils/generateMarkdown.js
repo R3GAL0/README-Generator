@@ -39,8 +39,59 @@ if (license == 2) {
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
   // insert all the components selected below
-  return `# ${data.title}`;
-  // 
+  return `# ${data.title}
+
+## Table of Contents
+
+
+${makeTOC(data.description, data.installation, data.test, data.usage, data.contributing, data.questions)}
+
+
+${renderData(data.description, 'Description')}
+${renderData(data.installation, 'Installation')}
+${renderData(data.test, 'Test')}
+${renderData(data.usage, 'Usage')}
+  
+
+  
+  `;
+
+}
+
+// makes the content and headers for each section
+function renderData(data, title) {
+  if (!data) {
+    return '';
+  }
+  return `## ${title}
+
+  ${data}
+  
+  `;
+}
+
+// makes the table of contents
+function makeTOC(description ,installation, test, usage, contributing, questions) {
+  let toc = '';
+  if (description){
+    toc = toc.concat('- [Description](#description)\n');
+  }
+  if (installation){
+    toc = toc.concat('- [Installation](#installation)\n');
+  }
+  if (test){
+    toc = toc.concat('- [Test](#test)\n');
+  }
+  if (usage){
+    toc = toc.concat('- [Usage](#usage)\n');
+  }
+  if (contributing){
+    toc = toc.concat('- [Contributing](#contributing)\n');
+  }
+  if (questions){
+    toc = toc.concat('- [Questions](#questions)\n');
+  }
+  return toc;
 }
 
 module.exports = generateMarkdown;

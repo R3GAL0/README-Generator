@@ -1,7 +1,6 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generateMarkdown = require('./utils/generateMarkdown');
 
 // add a badge for the selected license to the readme
 
@@ -19,12 +18,12 @@ async function askQuestions() {
                 name: 'title',
                 message: 'What is the title of your project?',
             },
-            // {
-            //     type: 'checkbox',
-            //     message: 'What sections do you want to include?', // optional sections
-            //     name: 'sections',
-            //     choices: ['Description', 'Table of Contents', 'Installation', 'Usage', 'License', 'Contributors', 'Tests', 'FAQ'],
-            // },
+            {
+                type: 'checkbox',
+                message: 'What sections do you want to include?', // optional sections
+                name: 'sections',
+                choices: ['Description', 'Table of Contents', 'Installation', 'Usage', 'License', 'Contributors', 'Tests', 'FAQ'],
+            },
             {
                 type: 'input',
                 name: 'githubUser',
@@ -34,48 +33,29 @@ async function askQuestions() {
                 type: 'input',
                 name: 'email',
                 message: 'What is your email address?',
-            },
-            {
-                type: 'input',
-                name: 'description',
-                message: 'Please write a short description of your project',
-              },
-            //   {
-            //     type: 'list',
-            //     name: 'license',
-            //     message: 'What kind of license should your project have?',
-            //     choices: ['MIT', 'APACHE 2.0', 'GPL 3.0', 'None'],
-            //   },
-              {
-                type: 'input',
-                name: 'installation',
-                message: 'What command should be run to install dependencies?',
-              },
-              {
-                type: 'input',
-                name: 'test',
-                message: 'What command should be run to run tests?',
-              },
-              {
-                type: 'input',
-                name: 'usage',
-                message: 'What does the user need to know about using the repo?',
-              },
-              {
-                type: 'input',
-                name: 'contributing',
-                message: 'What does the user need to know about contributing to the repo?',
-              },
-              {
-                type: 'input',
-                name: 'questions',
-                message: 'What are some common questions about the repo?',
-              },
+            }
         ])
         .then((data) => {
+            // console.log(data);
+            // if (data.sections.includes('License')){
+            //     pickLicense(data.githubUser);
+            // }
+
+            // catch if sections contains toc or questions
+            // let sectionTxt = await fillSections(data.sections)
+            console.log('outside function');
+            console.log(sectionTxt);
+            //{
+            //   title: 'title',
+            //   sections: [ 'Description', 'Usage', 'License' ],
+            //   githubUser: 'max',
+            //   email: '@roger'
+            // }
 
 
-            writeToFile('READMEcustom.md', generateMarkdown(data));
+            //   const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
+
+            // writeToFile(filename, data);git 
         });
 
 }
@@ -121,6 +101,31 @@ function pickLicense(name) {
     */
 }
 
+// prompts user to fill all sections except TOC and license
+// takes an array of strings
+async function fillSections(sections) {
+
+    // empty array to push section text into specific spots
+    let sectionTxt = []; 
+    // now prompt based on data to fill out selected sections
+    // loop of statements for each element of sections
+    for (let section of sections) {
+        await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: `What do you want your ${section} section to say?`,
+                    name: 'response',
+                }
+            ])
+            .then((r) => {
+                sectionTxt.push(r.response);
+            });
+
+    }    
+    // console.log(sectionTxt);
+    return sectionTxt;
+}
 
 
 
@@ -128,7 +133,7 @@ function pickLicense(name) {
 function writeToFile(fileName, data) {
 
     // appendFile() takes in 3 arguments: path, data, and callback function
-    fs.writeFile(fileName, data, (err) =>
+    fs.appendFile(fileName, data, (err) =>
         err ? console.error(err) : console.log('README created!')
     );
 }

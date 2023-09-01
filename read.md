@@ -1,12 +1,4 @@
 
-## Table of Contents (Optional)
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-
-
 ## Sections
 
 
@@ -20,6 +12,9 @@ Questions (FAQ)
 
 Table of Contents
 table of contents - works with links
+
+licenses
+'MIT', 'APACHE 2.0', 'GPL 3.0', 'BSD 3', 'None'
 
 
 need to finish: 
